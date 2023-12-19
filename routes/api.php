@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PusherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +22,9 @@ use App\Http\Controllers\UserController;
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
+
+Route::middleware('auth:api')->group(function () {
+    Route::post('/send-message', [PusherController::class, 'sendMessage']);
+});
+
 
