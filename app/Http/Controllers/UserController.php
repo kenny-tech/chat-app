@@ -25,9 +25,8 @@ class UserController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-            $token = $user->createToken('authToken')->accessToken;
+            return $this->sendResponse($user, 'Registration successful');
 
-            return response(['user' => $user, 'access_token' => $token]);
         } catch (\Exception $e) {
             return response(['message' => 'Registration failed', 'error' => $e->getMessage()], 500);
         }
@@ -49,10 +48,13 @@ class UserController extends Controller
 
             $user = $request->user();
             $token = $user->createToken('authToken')->accessToken;
+            $user['access_token'] = $token;
 
-            return response(['user' => $user, 'access_token' => $token]);
+            return $this->sendResponse($user, 'Login successful');
+
         } catch (\Exception $e) {
             return response(['message' => 'Login failed', 'error' => $e->getMessage()], 500);
         }
     }
+
 }
