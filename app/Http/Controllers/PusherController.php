@@ -39,7 +39,8 @@ class PusherController extends Controller
                 'message' => $chat->message,
             ]);
 
-            return response(['message' => 'Message sent and saved successfully']);
+            return $this->sendResponse($chat, 'Message sent and saved successfully');
+
         } catch (\Exception $e) {
             return response(['message' => 'Error sending and saving message', 'error' => $e->getMessage()], 500);
         }
